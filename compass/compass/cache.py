@@ -1,9 +1,21 @@
 import os
 import json
+import pathlib
 
 from ..globals import RESOURCE_DIR
 from ..models import init_model
-PREPROCESS_CACHE_DIR = os.path.join(RESOURCE_DIR, 'COMPASS')
+
+#Jiakuan ZHAO
+#2023.12.14
+#bug for non-root user or apptainer container
+#no permission for writing cache file back to rescource folder 
+#solution: define cache in user's home 
+
+#find home directory according user
+HOME_DIR = str(pathlib.Path.home())
+PREPROCESS_CACHE_DIR = os.path.join(HOME_DIR, ".COMPASS")
+
+#PREPROCESS_CACHE_DIR = os.path.join(RESOURCE_DIR, 'COMPASS')
 if not os.path.isdir(PREPROCESS_CACHE_DIR):
     os.mkdir(PREPROCESS_CACHE_DIR)
 
